@@ -36,8 +36,8 @@ public class PlayerController : MonoBehaviour
     {
         _horizontalInput = Input.acceleration.x;
 
-#if UNITY_EDITOR
-        _horizontalInput = Input.GetAxis("Horizontal");
+#if UNITY_EDITOR //this is for testing in editor. Note: must be commented for testing with Unity Remote
+        //_horizontalInput = Input.GetAxis("Horizontal");
 #endif
 
         MovePlayer(_horizontalInput);
@@ -45,7 +45,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Game Over!");
+        GameManager.Instance.GameOver((int)_score);
+        Destroy(gameObject);
     }
 
     private void MovePlayer (float horizontalInput)
