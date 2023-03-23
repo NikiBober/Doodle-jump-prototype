@@ -38,7 +38,6 @@ public class SpawnPlatforms : MonoBehaviour
         int platformIndex;
         for (int i = 0; i < spawnCount; i++)
         {
-
             if (_counter < _normalPlatfomsAtRow)
             {
                 platformIndex = 0;

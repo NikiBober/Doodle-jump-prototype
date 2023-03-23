@@ -5,7 +5,9 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private float _movementSpeed = 2.0f;
-    private float _sideBound = 2.8125f;
+    [SerializeField]
+    private Camera _camera;
+
     private float _score = 0;
     private float _horizontalInput;
     private Rigidbody2D _playerRigidbody;
@@ -24,12 +26,6 @@ public class PlayerController : MonoBehaviour
             _score = transform.position.y;
             GameManager.Instance.UpdateScore((int)_score);
         }
-
-        if (transform.position.x > _sideBound || transform.position.x < -_sideBound)
-        {
-            MirrorPlayer();
-        }
-
     }
 
     private void FixedUpdate()
@@ -41,6 +37,12 @@ public class PlayerController : MonoBehaviour
 #endif
 
         MovePlayer(_horizontalInput);
+
+        Vector3 viewPosition = _camera.WorldToViewportPoint(transform.position);
+        if (viewPosition.x > 1 || viewPosition.x < 0)
+        {
+            MirrorPlayer();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -62,6 +64,4 @@ public class PlayerController : MonoBehaviour
         position.x = -position.x;
         _playerRigidbody.position = position;
     }
-
-
 }

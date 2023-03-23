@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI _gameOverText;
     [SerializeField]
     private GameObject _pauseMenu;
+
     public static GameManager Instance;
 
     private void Awake()
