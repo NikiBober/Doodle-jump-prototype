@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// Controls player movement
+/// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
@@ -8,17 +10,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Camera _camera;
 
-    private float _score = 0;
+    private float _score = 0.0f;
     private float _horizontalInput;
     private Rigidbody2D _playerRigidbody;
 
-    // Start is called before the first frame update
+    // get reference to player`s rigidbody
     private void Start()
     {
         _playerRigidbody = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+    // update score depends on player`s highest position
     private void Update()
     {
         if (transform.position.y > _score)
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //take input and do movements
     private void FixedUpdate()
     {
         _horizontalInput = Input.acceleration.x;
@@ -37,7 +40,7 @@ public class PlayerController : MonoBehaviour
 #endif
 
         MovePlayer(_horizontalInput);
-
+        // mirror player`s position when he reaches camera`s viewport bounds
         Vector3 viewPosition = _camera.WorldToViewportPoint(transform.position);
         if (viewPosition.x > 1 || viewPosition.x < 0)
         {
@@ -45,12 +48,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // game over when player enter fall zone
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameManager.Instance.GameOver((int)_score);
         Destroy(gameObject);
     }
 
+    // move player`s rigidbody
     private void MovePlayer (float horizontalInput)
     {
         Vector2 velocity = _playerRigidbody.velocity;
@@ -58,6 +63,7 @@ public class PlayerController : MonoBehaviour
         _playerRigidbody.velocity = velocity;
     }
 
+    //change player`s position to opposite
     private void MirrorPlayer()
     {
         Vector3 position = _playerRigidbody.position;

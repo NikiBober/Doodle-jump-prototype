@@ -1,11 +1,12 @@
 using UnityEngine;
-
+/// <summary>
+/// Move camera up when player reaches camera center
+/// </summary>
 public class CameraFollow : MonoBehaviour
-{
+{   
     [SerializeField]
     private Transform _target;
 
-    //move camera up when player reaches camera center
     private void LateUpdate()
     {
         if (_target != null && _target.position.y > transform.position.y)

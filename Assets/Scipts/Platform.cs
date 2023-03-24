@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// Base platform that push the player
+/// </summary>
 public class Platform : MonoBehaviour
 {
     [SerializeField]
@@ -14,9 +16,10 @@ public class Platform : MonoBehaviour
         }
     }
 
-    //desrtoy when enter fall zone
+    //desrtoy when enter fall zone and instantiate new platform
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GameManager.Instance.SpawnPlatform();
         Destroy(gameObject);
     }
 
